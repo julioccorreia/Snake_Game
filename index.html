@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <script defer src="script.js"></script>
-    <title>Snake Game</title>
-</head>
-<body>
-    <canvas id="snake" width="512" height="512"></canvas>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+        <title>Snake Game</title>
+    </head>
+    <body>
+        <h1>Snake Game</h1>
 
-    
-</body>
+        <h3 id="pontuacao">Pontuação:</h3>
+
+        <canvas id="snake" width="512" height="512"></canvas>
+        <h2 id="avisos">...</h2>
+
+        <div class="botoes">
+            <button type="button" id="iniciar" class="btn btn-success btn-lg botao" onclick="javascript: iniciarJogo()">Iniciar</button>
+            <button type="button" id="reiniciar" class="btn btn-danger btn-lg botao" onclick="javascript: reiniciarJogo()">Reiniciar</button>
+        </div>
+
+        <script defer src="script.js"></script>
+    </body>
 </html>

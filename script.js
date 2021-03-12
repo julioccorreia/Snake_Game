@@ -6,11 +6,22 @@ snake[0] = {
     x: 8 * box,
     y: 8 * box,
 };
-let direction = "right";
 let food = {
     x: Math.floor(Math.random() * 15 + 1) * box,
     y: Math.floor(Math.random() * 15 + 1) * box,
 };
+let direction = "right";
+let pontuacao = document.getElementById("pontuacao");
+let pontos = 0;
+let avisos = document.getElementById("avisos");
+
+function limparJogo() {
+    snake = [];
+    snake[0] = {
+        x: 8 * box,
+        y: 8 * box,
+    };
+}
 
 function criarBG() {
     context.fillStyle = "lightgreen";
@@ -38,7 +49,7 @@ function update(event) {
     if (event.keyCode == 40 && direction != "up") direction = "down";
 }
 
-function iniciarJogo() {
+function carregarJogo() {
     if (snake[0].x > 15 * box && direction == "right") snake[0].x = 0 * box;
     if (snake[0].x < 0 * box && direction == "left") snake[0].x = 16 * box;
     if (snake[0].y > 15 * box && direction == "down") snake[0].y = 0 * box;
@@ -46,8 +57,12 @@ function iniciarJogo() {
 
     for (i = 1; i < snake.length; i++) {
         if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
+            avisos.innerHTML = "Game Over!";
+            avisos.style.display = "initial";
+            pontos = 0;
+            document.getElementById("reiniciar").style.display = "initial";
             clearInterval(jogo);
-            alert("Game Over!");
+            limparJogo();
         }
     }
 
@@ -68,6 +83,9 @@ function iniciarJogo() {
     } else {
         food.x = Math.floor(Math.random() * 15 + 1) * box;
         food.y = Math.floor(Math.random() * 15 + 1) * box;
+
+        pontos = pontos + 1;
+        pontuacao.innerHTML = "Pontuação: " + pontos;
     }
 
     let newHead = {
@@ -78,4 +96,33 @@ function iniciarJogo() {
     snake.unshift(newHead);
 }
 
-let jogo = setInterval(iniciarJogo, 100);
+function iniciarContador() {
+    var s = 3;
+
+    var contador = setInterval(function () {
+        if (s > 0) {
+            avisos.innerHTML = s;
+            s = s - 1;
+        } else {
+            clearInterval(contador);
+            avisos.style.display = "none";
+            let jogo = setInterval(carregarJogo, 120);
+        }
+    }, 1000);
+}
+
+function iniciarJogo() {
+    limparJogo();
+    iniciarContador();
+    document.getElementById("iniciar").style.display = "none";
+    pontuacao.innerHTML = "Pontuação: " + pontos;
+}
+
+function reiniciarJogo() {
+    limparJogo();
+    iniciarContador();
+    document.getElementById("reiniciar").style.display = "none";
+    pontuacao.innerHTML = "Pontuação: " + pontos;
+}
+
+criarBG();
